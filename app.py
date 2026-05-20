@@ -1,5 +1,37 @@
-============================================================
+================================================
+import streamlit as st
+import pandas as pd
+import numpy as np
+import os
+import sqlite3
 
+st.set_page_config(
+    page_title="South Sudan Malnutrition Dashboard",
+    layout="wide"
+)
+
+DATA_PATH = "data"
+os.makedirs(DATA_PATH, exist_ok=True)
+
+# ============================================================
+# REGIONS
+# ============================================================
+
+regions = [
+    "Warrap",
+    "Northern Bahr el Ghazal",
+    "Western Bahr el Ghazal"
+]
+
+@st.cache_data
+def load_data():
+    np.random.seed(42)
+
+    df = pd.DataFrame({
+        "region": regions
+    })
+
+    return df
 South Sudan Malnutrition Trends Dashboard (Streamlit)
 
 Ten States + Three Administrative Areas
