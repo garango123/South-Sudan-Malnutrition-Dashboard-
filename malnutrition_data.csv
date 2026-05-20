@@ -1,0 +1,169 @@
+State,Group,Year,Rate
+Warrap,Children,2020,32
+Warrap,Children,2021,34
+Warrap,Children,2022,33
+Warrap,Children,2023,35
+Warrap,Adolescents,2020,18
+Warrap,Adolescents,2021,19
+Warrap,Adolescents,2022,20
+Warrap,Adolescents,2023,21
+Warrap,Adults,2020,14
+Warrap,Adults,2021,15
+Warrap,Adults,2022,16
+Warrap,Adults,2023,17
+
+Northern Bahr el Ghazal,Children,2020,30
+Northern Bahr el Ghazal,Children,2021,31
+Northern Bahr el Ghazal,Children,2022,33
+Northern Bahr el Ghazal,Children,2023,34
+Northern Bahr el Ghazal,Adolescents,2020,17
+Northern Bahr el Ghazal,Adolescents,2021,18
+Northern Bahr el Ghazal,Adolescents,2022,19
+Northern Bahr el Ghazal,Adolescents,2023,20
+Northern Bahr el Ghazal,Adults,2020,13
+Northern Bahr el Ghazal,Adults,2021,14
+Northern Bahr el Ghazal,Adults,2022,15
+Northern Bahr el Ghazal,Adults,2023,16
+
+Western Bahr el Ghazal,Children,2020,28
+Western Bahr el Ghazal,Children,2021,29
+Western Bahr el Ghazal,Children,2022,31
+Western Bahr el Ghazal,Children,2023,32
+Western Bahr el Ghazal,Adolescents,2020,16
+Western Bahr el Ghazal,Adolescents,2021,17
+Western Bahr el Ghazal,Adolescents,2022,18
+Western Bahr el Ghazal,Adolescents,2023,19
+Western Bahr el Ghazal,Adults,2020,12
+Western Bahr el Ghazal,Adults,2021,13
+Western Bahr el Ghazal,Adults,2022,14
+Western Bahr el Ghazal,Adults,2023,15
+
+Lakes,Children,2020,33
+Lakes,Children,2021,34
+Lakes,Children,2022,35
+Lakes,Children,2023,36
+Lakes,Adolescents,2020,19
+Lakes,Adolescents,2021,20
+Lakes,Adolescents,2022,21
+Lakes,Adolescents,2023,22
+Lakes,Adults,2020,14
+Lakes,Adults,2021,15
+Lakes,Adults,2022,16
+Lakes,Adults,2023,17
+
+Western Equatoria,Children,2020,26
+Western Equatoria,Children,2021,27
+Western Equatoria,Children,2022,28
+Western Equatoria,Children,2023,29
+Western Equatoria,Adolescents,2020,14
+Western Equatoria,Adolescents,2021,15
+Western Equatoria,Adolescents,2022,16
+Western Equatoria,Adolescents,2023,17
+Western Equatoria,Adults,2020,10
+Western Equatoria,Adults,2021,11
+Western Equatoria,Adults,2022,12
+Western Equatoria,Adults,2023,13
+
+Central Equatoria,Children,2020,27
+Central Equatoria,Children,2021,28
+Central Equatoria,Children,2022,29
+Central Equatoria,Children,2023,30
+Central Equatoria,Adolescents,2020,15
+Central Equatoria,Adolescents,2021,16
+Central Equatoria,Adolescents,2022,17
+Central Equatoria,Adolescents,2023,18
+Central Equatoria,Adults,2020,11
+Central Equatoria,Adults,2021,12
+Central Equatoria,Adults,2022,13
+Central Equatoria,Adults,2023,14
+
+Eastern Equatoria,Children,2020,31
+Eastern Equatoria,Children,2021,32
+Eastern Equatoria,Children,2022,33
+Eastern Equatoria,Children,2023,34
+Eastern Equatoria,Adolescents,2020,18
+Eastern Equatoria,Adolescents,2021,19
+Eastern Equatoria,Adolescents,2022,20
+Eastern Equatoria,Adolescents,2023,21
+Eastern Equatoria,Adults,2020,13
+Eastern Equatoria,Adults,2021,14
+Eastern Equatoria,Adults,2022,15
+Eastern Equatoria,Adults,2023,16
+
+Jonglei,Children,2020,37
+Jonglei,Children,2021,38
+Jonglei,Children,2022,39
+Jonglei,Children,2023,40
+Jonglei,Adolescents,2020,20
+Jonglei,Adolescents,2021,21
+Jonglei,Adolescents,2022,22
+Jonglei,Adolescents,2023,23
+Jonglei,Adults,2020,15
+Jonglei,Adults,2021,16
+Jonglei,Adults,2022,17
+Jonglei,Adults,2023,18
+
+Upper Nile,Children,2020,36
+Upper Nile,Children,2021,37
+Upper Nile,Children,2022,38
+Upper Nile,Children,2023,39
+Upper Nile,Adolescents,2020,19
+Upper Nile,Adolescents,2021,20
+Upper Nile,Adolescents,2022,21
+Upper Nile,Adolescents,2023,22
+Upper Nile,Adults,2020,14
+Upper Nile,Adults,2021,15
+Upper Nile,Adults,2022,16
+Upper Nile,Adults,2023,17
+
+Unity,Children,2020,35
+Unity,Children,2021,36
+Unity,Children,2022,37
+Unity,Children,2023,38
+Unity,Adolescents,2020,18
+Unity,Adolescents,2021,19
+Unity,Adolescents,2022,20
+Unity,Adolescents,2023,21
+Unity,Adults,2020,13
+Unity,Adults,2021,14
+Unity,Adults,2022,15
+Unity,Adults,2023,16
+
+Pibor Administrative Area,Children,2020,40
+Pibor Administrative Area,Children,2021,41
+Pibor Administrative Area,Children,2022,42
+Pibor Administrative Area,Children,2023,43
+Pibor Administrative Area,Adolescents,2020,22
+Pibor Administrative Area,Adolescents,2021,23
+Pibor Administrative Area,Adolescents,2022,24
+Pibor Administrative Area,Adolescents,2023,25
+Pibor Administrative Area,Adults,2020,16
+Pibor Administrative Area,Adults,2021,17
+Pibor Administrative Area,Adults,2022,18
+Pibor Administrative Area,Adults,2023,19
+
+Ruweng Administrative Area,Children,2020,29
+Ruweng Administrative Area,Children,2021,30
+Ruweng Administrative Area,Children,2022,31
+Ruweng Administrative Area,Children,2023,32
+Ruweng Administrative Area,Adolescents,2020,15
+Ruweng Administrative Area,Adolescents,2021,16
+Ruweng Administrative Area,Adolescents,2022,17
+Ruweng Administrative Area,Adolescents,2023,18
+Ruweng Administrative Area,Adults,2020,12
+Ruweng Administrative Area,Adults,2021,13
+Ruweng Administrative Area,Adults,2022,14
+Ruweng Administrative Area,Adults,2023,15
+
+Abyei Administrative Area,Children,2020,31
+Abyei Administrative Area,Children,2021,32
+Abyei Administrative Area,Children,2022,33
+Abyei Administrative Area,Children,2023,34
+Abyei Administrative Area,Adolescents,2020,17
+Abyei Administrative Area,Adolescents,2021,18
+Abyei Administrative Area,Adolescents,2022,19
+Abyei Administrative Area,Adolescents,2023,20
+Abyei Administrative Area,Adults,2020,13
+Abyei Administrative Area,Adults,2021,14
+Abyei Administrative Area,Adults,2022,15
+Abyei Administrative Area,Adults,2023,16
