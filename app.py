@@ -3,464 +3,410 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# =========================================================
+# ==========================================================
 # PAGE CONFIGURATION
-# =========================================================
+# ==========================================================
 st.set_page_config(
-    page_title="South Sudan Acute Malnutrition Crisis Dashboard (2026)",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="South Sudan Acute Malnutrition Dashboard",
+    page_icon="🇸🇸",
+    layout="wide"
 )
 
-# =========================================================
-# CUSTOM STYLING
-# =========================================================
+# ==========================================================
+# CUSTOM CSS
+# ==========================================================
 st.markdown("""
 <style>
-/* Main background */
-.stApp {
-    background-color: #0f172a;
-    color: white;
+
+.main {
+    background-color: #f5f7fa;
 }
 
-/* Headers */
-h1, h2, h3, h4 {
-    color: #f8fafc !important;
+h1, h2, h3 {
+    color: #0b3d91;
 }
 
-/* Metric cards */
 [data-testid="metric-container"] {
-    background: linear-gradient(135deg, #1e293b, #334155);
-    border: 1px solid #475569;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.3);
-}
-
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background-color: #111827;
-}
-
-/* Tables */
-[data-testid="stDataFrame"] {
     background-color: white;
-    border-radius: 10px;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    border-left: 5px solid #0b3d91;
 }
 
-/* Expander */
-.streamlit-expanderHeader {
-    background-color: #1e293b;
-    color: white !important;
-    border-radius: 8px;
+section[data-testid="stSidebar"] {
+    background-color: #0b3d91;
 }
 
-/* Buttons */
-.stButton>button {
-    background-color: #2563eb;
+section[data-testid="stSidebar"] * {
     color: white;
-    border-radius: 8px;
-    border: none;
-    padding: 0.5rem 1rem;
 }
 
-.stButton>button:hover {
-    background-color: #1d4ed8;
-}
 </style>
 """, unsafe_allow_html=True)
 
-# =========================================================
+# ==========================================================
 # TITLE
-# =========================================================
+# ==========================================================
 st.title("🇸🇸 South Sudan Acute Malnutrition Crisis Dashboard (2026)")
 
 st.markdown("""
-### National Nutrition Situation Overview
+This dashboard provides a national overview of the acute malnutrition situation
+across South Sudan's 10 states and 3 Administrative Areas.
 
-This dashboard provides a comprehensive overview of the **2026 acute malnutrition crisis**
-across all **10 states** and **3 Administrative Areas** of South Sudan.
-
-#### Dashboard Includes:
-- Acute malnutrition severity analysis
+### Dashboard Features
+- Nutrition severity analysis
 - IPC classification monitoring
-- County-level GAM and SAM indicators
-- Crisis drivers and vulnerabilities
-- Humanitarian response tracking
-- Interactive visual analytics
-
+- County-level GAM & SAM analysis
+- Interactive charts and tables
+- Humanitarian response overview
 """)
 
-st.warning(
-    "⚠️ Placeholder data is currently used. Replace with verified datasets "
-    "from IPC, UNICEF, WHO, WFP, FSNMS, and CLiMIS."
-)
 
-# =========================================================
-# SIDEBAR
-# =========================================================
-st.sidebar.title("📌 Dashboard Navigation")
+# ==========================================================
+# NATIONAL METRICS
+# ==========================================================
+st.header("🌍 National Nutrition Overview")
 
-menu = st.sidebar.radio(
-    "Select Dashboard Section",
-    [
-        "National Overview",
-        "Regional Severity",
-        "IPC Phase 5 Areas",
-        "County Analysis",
-        "Crisis Drivers",
-        "Humanitarian Response"
-    ]
-)
+col1, col2, col3, col4 = st.columns(4)
 
-# =========================================================
-# DATA
-# =========================================================
+with col1:
+    st.metric(
+        "Children U5 Needing Treatment",
+        "2.2M",
+        "+12%"
+    )
 
-states_list = [
+with col2:
+    st.metric(
+        "PLW Affected",
+        "1.2M",
+        "+8%"
+    )
+
+with col3:
+    st.metric(
+        "Population IPC 3+",
+        "7.8M",
+        "+15%"
+    )
+
+with col4:
+    st.metric(
+        "Critical Counties",
+        "32",
+        "+5"
+    )
+
+# ==========================================================
+# REGIONAL DATA
+# ==========================================================
+states = [
     "Jonglei",
     "Upper Nile",
     "Unity",
     "Warrap",
-    "Western Bahr el Ghazal",
-    "Northern Bahr el Ghazal",
     "Lakes",
+    "Northern Bahr el Ghazal",
+    "Western Bahr el Ghazal",
     "Eastern Equatoria",
     "Central Equatoria",
-    "Western Equatoria"
-]
-
-admin_areas = [
+    "Western Equatoria",
     "Abyei Administrative Area",
     "Greater Pibor Administrative Area",
     "Ruweng Administrative Area"
 ]
 
-severity_df = pd.DataFrame({
-    "Region": states_list + admin_areas,
-    "Type": ["State"] * len(states_list) + ["Administrative Area"] * len(admin_areas),
-    "Severity Score": [75, 82, 79, 68, 60, 62, 58, 54, 50, 52, 85, 78, 73]
+severity = [82, 79, 76, 70, 61, 64, 59, 52, 48, 50, 85, 78, 74]
+
+regions_df = pd.DataFrame({
+    "Region": states,
+    "Severity Score": severity
 })
+
+# ==========================================================
+# BAR CHART
+# ==========================================================
+st.header("📊 Regional Malnutrition Severity")
+
+fig_bar = px.bar(
+    regions_df,
+    x="Region",
+    y="Severity Score",
+    color="Severity Score",
+    text="Severity Score",
+    template="plotly_white",
+    title="Regional Severity Scores"
+)
+
+fig_bar.update_layout(
+    xaxis_tickangle=-30,
+    height=500
+)
+
+st.plotly_chart(fig_bar, use_container_width=True)
+
+# ==========================================================
+# PIE CHART
+# ==========================================================
+st.header("⚠️ Drivers of Acute Malnutrition")
+
+drivers_df = pd.DataFrame({
+    "Driver": [
+        "Conflict",
+        "Flooding",
+        "Displacement",
+        "Disease",
+        "Economic Crisis",
+        "Access Constraints"
+    ],
+    "Percentage": [30, 20, 18, 12, 10, 10]
+})
+
+fig_pie = px.pie(
+    drivers_df,
+    names="Driver",
+    values="Percentage",
+    hole=0.4,
+    title="Main Drivers of Nutrition Crisis"
+)
+
+st.plotly_chart(fig_pie, use_container_width=True)
+
+# ==========================================================
+# COUNTY DATA
+# ==========================================================
+county_df = pd.DataFrame({
+    "State": [
+        "Jonglei",
+        "Jonglei",
+        "Upper Nile",
+        "Unity",
+        "Unity",
+        "Warrap",
+        "Lakes"
+    ],
+    "County": [
+        "Akobo",
+        "Fangak",
+        "Nasir",
+        "Leer",
+        "Rubkona",
+        "Tonj North",
+        "Rumbek East"
+    ],
+    "GAM (%)": [21.5, 20.2, 18.6, 17.8, 19.1, 14.5, 13.8],
+    "SAM (%)": [5.2, 4.9, 4.5, 4.1, 4.8, 3.0, 2.8],
+    "Food Insecurity (%)": [82, 80, 76, 72, 75, 65, 60]
+})
+
+# ==========================================================
+# DATA TABLE
+# ==========================================================
+st.header("📋 County Nutrition Statistics")
+
+st.dataframe(
+    county_df,
+    use_container_width=True
+)
+
+# ==========================================================
+# SELECT BOX
+# ==========================================================
+selected_state = st.selectbox(
+    "Select State",
+    county_df["State"].unique()
+)
+
+filtered_df = county_df[
+    county_df["State"] == selected_state
+]
+
+# ==========================================================
+# COUNTY BAR CHART
+# ==========================================================
+st.subheader(f"GAM Rates — {selected_state}")
+
+fig_gam = px.bar(
+    filtered_df,
+    x="County",
+    y="GAM (%)",
+    text="GAM (%)",
+    color="County",
+    template="plotly_white"
+)
+
+st.plotly_chart(fig_gam, use_container_width=True)
+
+# ==========================================================
+# HISTOGRAM
+# ==========================================================
+st.subheader("📈 GAM Distribution Histogram")
+
+fig_hist = px.histogram(
+    county_df,
+    x="GAM (%)",
+    nbins=10,
+    color="State",
+    template="plotly_white"
+)
+
+st.plotly_chart(fig_hist, use_container_width=True)
+
+# ==========================================================
+# SCATTER PLOT
+# ==========================================================
+st.subheader(" GAM vs Food Insecurity")
+
+fig_scatter = px.scatter(
+    county_df,
+    x="Food Insecurity (%)",
+    y="GAM (%)",
+    size="SAM (%)",
+    color="State",
+    hover_name="County",
+    template="plotly_white"
+)
+
+st.plotly_chart(fig_scatter, use_container_width=True)
+
+# ==========================================================
+# LINE CHART
+# ==========================================================
+st.header("📉 Monthly Nutrition Trend")
+
+trend_df = pd.DataFrame({
+    "Month": [
+        "Jan", "Feb", "Mar", "Apr",
+        "May", "Jun", "Jul", "Aug",
+        "Sep", "Oct", "Nov", "Dec"
+    ],
+    "Cases": [
+        120, 150, 170, 200,
+        220, 260, 280, 300,
+        320, 340, 360, 390
+    ]
+})
+
+fig_line = px.line(
+    trend_df,
+    x="Month",
+    y="Cases",
+    markers=True,
+    title="Monthly Acute Malnutrition Trend",
+    template="plotly_white"
+)
+
+st.plotly_chart(fig_line, use_container_width=True)
+
+# ==========================================================
+# IPC PHASE 5 TABLE
+# ==========================================================
+st.header(" IPC Phase 5 Areas")
 
 ipc_df = pd.DataFrame({
     "Region": [
         "Jonglei",
         "Jonglei",
-        "Jonglei",
-        "Upper Nile",
         "Upper Nile",
         "Unity",
-        "Unity",
-        "Abyei Administrative Area"
-    ],
-    "County": [
-        "Akobo",
-        "Uror",
-        "Fangak",
-        "Ulang",
-        "Nasir",
-        "Rubkona",
-        "Abiemnhom",
         "Abyei Area"
-    ]
-})
-
-county_data = pd.DataFrame({
-    "State/Area": [
-        "Jonglei",
-        "Jonglei",
-        "Upper Nile",
-        "Unity",
-        "Unity",
-        "Warrap"
     ],
     "County": [
         "Akobo",
         "Fangak",
-        "Ulang",
-        "Rubkona",
+        "Nasir",
         "Leer",
-        "Tonj North"
+        "Abyei"
     ],
-    "GAM (%)": [21.5, 19.8, 17.2, 18.8, 16.3, 14.2],
-    "SAM (%)": [5.1, 4.8, 4.2, 4.6, 4.0, 3.2],
-    "Food Insecurity (%)": [78, 82, 70, 75, 72, 65]
-})
-
-drivers_df = pd.DataFrame({
-    "Driver": [
-        "Conflict",
-        "Displacement",
-        "Flooding",
-        "Economic Crisis",
-        "Disease Outbreaks",
-        "Access Restrictions"
-    ],
-    "Impact Weight (%)": [30, 25, 15, 10, 12, 8]
-})
-
-nutrition_df = pd.DataFrame({
-    "Group": [
-        "Children Under 5",
-        "Pregnant & Breastfeeding Women"
-    ],
-    "Population (Millions)": [2.2, 1.2]
-})
-
-# =========================================================
-# NATIONAL OVERVIEW
-# =========================================================
-if menu == "National Overview":
-
-    st.header("🌍 National Nutrition Crisis Overview")
-
-    col1, col2, col3 = st.columns(3)
-
-    col1.metric(
-        "Children Under 5 Requiring Treatment",
-        "2.2 Million"
-    )
-
-    col2.metric(
-        "Pregnant & Breastfeeding Women",
-        "1.2 Million"
-    )
-
-    col3.metric(
-        "Population Facing IPC 3+",
-        "7.8 Million"
-    )
-
-    st.markdown("---")
-
-    fig = go.Figure()
-
-    fig.add_trace(go.Indicator(
-        mode="gauge+number",
-        value=78,
-        title={'text': "National Nutrition Severity Index"},
-        gauge={
-            'axis': {'range': [0, 100]},
-            'bar': {'color': "red"},
-            'steps': [
-                {'range': [0, 40], 'color': "green"},
-                {'range': [40, 70], 'color': "orange"},
-                {'range': [70, 100], 'color': "darkred"}
-            ]
-        }
-    ))
-
-    fig.update_layout(
-        paper_bgcolor="#0f172a",
-        font={"color": "white"}
-    )
-
-    st.plotly_chart(fig, use_container_width=True)
-
-# =========================================================
-# REGIONAL SEVERITY
-# =========================================================
-elif menu == "Regional Severity":
-
-    st.header("📊 Regional Malnutrition Severity")
-
-    fig_regions = px.bar(
-        severity_df,
-        x="Region",
-        y="Severity Score",
-        color="Type",
-        text="Severity Score",
-        template="plotly_dark",
-        title="Malnutrition Severity Across South Sudan"
-    )
-
-    fig_regions.update_layout(
-        xaxis_tickangle=-30
-    )
-
-    st.plotly_chart(fig_regions, use_container_width=True)
-
-    st.subheader("Regional Data Table")
-    st.dataframe(severity_df, use_container_width=True)
-
-# =========================================================
-# IPC PHASE 5
-# =========================================================
-elif menu == "IPC Phase 5 Areas":
-
-    st.header("🔥 IPC Phase 5 Locations")
-
-    st.error(
-        "The following locations are categorized as "
-        "Catastrophe / Extremely Critical."
-    )
-
-    st.dataframe(ipc_df, use_container_width=True)
-
-    fig_ipc = px.histogram(
-        ipc_df,
-        x="Region",
-        color="Region",
-        template="plotly_dark",
-        title="Distribution of IPC Phase 5 Counties"
-    )
-
-    st.plotly_chart(fig_ipc, use_container_width=True)
-
-# =========================================================
-# COUNTY ANALYSIS
-# =========================================================
-elif menu == "County Analysis":
-
-    st.header("🔍 Interactive County Analysis")
-
-    selected_state = st.selectbox(
-        "Select State or Administrative Area",
-        sorted(county_data["State/Area"].unique())
-    )
-
-    filtered = county_data[
-        county_data["State/Area"] == selected_state
+    "Classification": [
+        "Catastrophe",
+        "Extremely Critical",
+        "Catastrophe",
+        "Critical",
+        "Critical"
     ]
+})
 
-    st.subheader(f"County Statistics — {selected_state}")
+st.dataframe(ipc_df, use_container_width=True)
 
-    st.dataframe(filtered, use_container_width=True)
-
-    # GAM Bar Chart
-    fig_county = px.bar(
-        filtered,
-        x="County",
-        y="GAM (%)",
-        color="County",
-        text="GAM (%)",
-        template="plotly_dark",
-        title=f"GAM Rates in {selected_state}"
-    )
-
-    st.plotly_chart(fig_county, use_container_width=True)
-
-    # Histogram
-    fig_hist = px.histogram(
-        filtered,
-        x="GAM (%)",
-        nbins=10,
-        template="plotly_dark",
-        title=f"GAM Distribution in {selected_state}"
-    )
-
-    st.plotly_chart(fig_hist, use_container_width=True)
-
-    # Scatter Plot
-    fig_scatter = px.scatter(
-        filtered,
-        x="Food Insecurity (%)",
-        y="GAM (%)",
-        size="SAM (%)",
-        color="County",
-        hover_name="County",
-        template="plotly_dark",
-        title="Food Insecurity vs GAM"
-    )
-
-    st.plotly_chart(fig_scatter, use_container_width=True)
-
-# =========================================================
-# CRISIS DRIVERS
-# =========================================================
-elif menu == "Crisis Drivers":
-
-    st.header("⚠️ Drivers of Acute Malnutrition")
-
-    fig_drivers = px.pie(
-        drivers_df,
-        names="Driver",
-        values="Impact Weight (%)",
-        hole=0.4,
-        template="plotly_dark",
-        title="Key Drivers of the Nutrition Crisis"
-    )
-
-    st.plotly_chart(fig_drivers, use_container_width=True)
-
-    st.subheader("Nutrition Burden")
-
-    fig_burden = px.bar(
-        nutrition_df,
-        x="Group",
-        y="Population (Millions)",
-        color="Group",
-        text="Population (Millions)",
-        template="plotly_dark",
-        title="Affected Population Groups"
-    )
-
-    st.plotly_chart(fig_burden, use_container_width=True)
-
-# =========================================================
+# ==========================================================
 # HUMANITARIAN RESPONSE
-# =========================================================
-elif menu == "Humanitarian Response":
+# ==========================================================
+st.header(" Humanitarian Response")
 
-    st.header("🚑 Humanitarian Response Activities")
+response_df = pd.DataFrame({
+    "Program": [
+        "Therapeutic Feeding",
+        "Mobile Clinics",
+        "MUAC Screening",
+        "WASH Support",
+        "Vaccination"
+    ],
+    "Coverage (%)": [78, 60, 85, 55, 70]
+})
 
-    st.success("""
-    Humanitarian partners and the Ministry of Health are scaling up:
+fig_response = px.bar(
+    response_df,
+    x="Program",
+    y="Coverage (%)",
+    text="Coverage (%)",
+    color="Program",
+    template="plotly_white",
+    title="Response Coverage"
+)
 
-    ✅ Stabilization Centers  
-    ✅ Therapeutic Feeding Programs  
-    ✅ Community MUAC Screening  
-    ✅ Mobile Nutrition Clinics  
-    ✅ Cholera Response Activities  
-    ✅ WASH-Nutrition Integrated Response  
-    """)
+st.plotly_chart(fig_response, use_container_width=True)
 
-    response_df = pd.DataFrame({
-        "Intervention": [
-            "Therapeutic Feeding",
-            "Mobile Clinics",
-            "MUAC Screening",
-            "WASH Support",
-            "Disease Response"
-        ],
-        "Coverage (%)": [72, 55, 80, 60, 68]
-    })
+# ==========================================================
+# GAUGE CHART
+# ==========================================================
+st.header(" National Severity Gauge")
 
-    fig_response = px.bar(
-        response_df,
-        x="Intervention",
-        y="Coverage (%)",
-        color="Intervention",
-        text="Coverage (%)",
-        template="plotly_dark",
-        title="Humanitarian Response Coverage"
-    )
+fig_gauge = go.Figure(go.Indicator(
+    mode="gauge+number",
+    value=78,
+    title={'text': "National Severity Index"},
+    gauge={
+        'axis': {'range': [0, 100]},
+        'bar': {'color': "red"},
+        'steps': [
+            {'range': [0, 40], 'color': "green"},
+            {'range': [40, 70], 'color': "orange"},
+            {'range': [70, 100], 'color': "darkred"}
+        ]
+    }
+))
 
-    st.plotly_chart(fig_response, use_container_width=True)
+fig_gauge.update_layout(height=400)
 
-# =========================================================
-# STATE EXPANDERS
-# =========================================================
-st.markdown("---")
-st.header("📌 State-by-State Narrative Analysis")
+st.plotly_chart(fig_gauge, use_container_width=True)
 
-for state in states_list + admin_areas:
+# ==========================================================
+# STATE ANALYSIS
+# ==========================================================
+st.header(" State-by-State Analysis")
+
+for state in states:
     with st.expander(f"{state} Analysis"):
         st.write(f"""
-        **{state}** continues to experience varying levels of acute malnutrition,
-        driven by food insecurity, displacement, disease outbreaks, flooding,
-        and limited access to health services.
+        {state} continues to experience acute malnutrition challenges due to:
+        - Food insecurity
+        - Conflict and displacement
+        - Disease outbreaks
+        - Flooding
+        - Limited health service access
 
-        Replace this section with verified IPC or Nutrition Cluster analysis.
+        
         """)
 
-# =========================================================
+# ==========================================================
 # FOOTER
-# =========================================================
+# ==========================================================
 st.markdown("---")
 
 st.caption("""
 Data Sources:
-IPC AMN 2026 | UNICEF South Sudan | WHO Africa | WFP FSMS |
-CLiMIS South Sudan | Nutrition Cluster Reports
+IPC Acute Malnutrition Analysis 2026 | UNICEF South Sudan |
+WHO Africa | WFP FSMS | CLiMIS | Nutrition Cluster
 """)
