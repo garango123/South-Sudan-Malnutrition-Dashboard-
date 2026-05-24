@@ -2,240 +2,218 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# -----------------------------
-# PAGE CONFIG
-# -----------------------------
+# --------------------------------------------------
+# PAGE CONFIGURATION
+# --------------------------------------------------
 st.set_page_config(
     page_title="South Sudan Acute Malnutrition Crisis Dashboard (2026)",
     layout="wide"
 )
 
-# -----------------------------
-# TITLE & INTRO
-# -----------------------------
+# --------------------------------------------------
+# TITLE & INTRODUCTION
+# --------------------------------------------------
 st.title("South Sudan Acute Malnutrition Crisis Dashboard (2026)")
 
 st.markdown("""
-This dashboard provides a professional and data-driven overview of the acute malnutrition crisis in South Sudan during the 2026 lean season.
+This dashboard provides a comprehensive overview of the 2026 acute malnutrition crisis in South Sudan,
+covering all **10 states** and **3 Administrative Areas**.
 
-The analysis highlights the most affected states, IPC Acute Malnutrition classifications, humanitarian response activities, food insecurity patterns, and critical nutrition indicators affecting children under five and pregnant and breastfeeding women.
-
-The crisis is primarily driven by:
-- Conflict and displacement  
-- Cholera outbreaks and disease burden  
-- Economic collapse and inflation  
-- Flooding and climate shocks  
-- Restricted humanitarian access  
-- Disrupted agricultural production  
+It includes:
+- State and county malnutrition severity  
+- IPC Acute Malnutrition classifications  
+- Drivers of the nutrition crisis  
+- Affected population groups  
+- Humanitarian response activities  
+- Interactive analytical tools  
 """)
 
-# -----------------------------
-# NATIONAL CRISIS HIGHLIGHTS
-# -----------------------------
-st.header("National Crisis Highlights")
+st.warning("Note: The numerical data shown here is placeholder data. Replace with official data from IPC, UNICEF, WHO, WFP, CLiMIS, and other verified sources.")
+
+# --------------------------------------------------
+# NATIONAL HIGHLIGHTS
+# --------------------------------------------------
+st.header("🌍 National Nutrition Crisis Overview (2026)")
 
 col1, col2, col3 = st.columns(3)
 col1.metric("Children Under 5 Requiring Treatment", "2.2 Million")
-col2.metric("Pregnant & Breastfeeding Women", "1.2 Million")
-col3.metric("People Facing Acute Hunger", "7.8 Million")
+col2.metric("Pregnant & Breastfeeding Women (PLW)", "1.2 Million")
+col3.metric("People Facing Crisis or Worse (IPC 3+)", "7.8 Million")
 
-st.warning("South Sudan is experiencing one of the worst food insecurity and acute malnutrition crises in its history.")
+# --------------------------------------------------
+# STATES & ADMINISTRATIVE AREAS
+# --------------------------------------------------
+st.header("📌 South Sudan States & Administrative Areas")
 
-# -----------------------------
-# MOST AFFECTED STATES
-# -----------------------------
-st.header("Most Affected States")
+states_list = [
+    "Jonglei", "Upper Nile", "Unity", "Warrap",
+    "Western Bahr el Ghazal", "Northern Bahr el Ghazal", "Lakes",
+    "Eastern Equatoria", "Central Equatoria", "Western Equatoria"
+]
 
-states_df = pd.DataFrame({
-    "State": [
-        "Jonglei",
-        "Upper Nile",
-        "Unity",
-        "Warrap",
-        "Northern Bahr el Ghazal"
-    ],
-    "Severity": [95, 90, 88, 76, 72]
+admin_areas = [
+    "Abyei Administrative Area",
+    "Greater Pibor Administrative Area",
+    "Ruweng Administrative Area"
+]
+
+# -----------------------
+# Placeholder severity data
+# -----------------------
+severity_df = pd.DataFrame({
+    "Region": states_list + admin_areas,
+    "Type": ["State"] * len(states_list) + ["Administrative Area"] * len(admin_areas),
+    "Severity Score": [75, 82, 79, 68, 60, 62, 58, 54, 50, 52, 85, 78, 73]  # Placeholder
 })
 
-fig_states = px.bar(
-    states_df,
-    x="State",
-    y="Severity",
-    title="Malnutrition Severity Across Most Affected States",
-    text="Severity",
-    color="Severity",
-    color_continuous_scale="Reds"
+fig_regions = px.bar(
+    severity_df,
+    x="Region",
+    y="Severity Score",
+    color="Type",
+    title="Malnutrition Severity: States & Administrative Areas",
+    text="Severity Score"
 )
+st.plotly_chart(fig_regions, use_container_width=True)
 
-st.plotly_chart(fig_states, use_container_width=True)
+# --------------------------------------------------
+# IPC PHASE 5 EXTREME AREAS
+# --------------------------------------------------
+st.header("🔥 IPC Phase 5 (Catastrophe / Extremely Critical) Locations")
 
-st.markdown("""
-Approximately 70% of South Sudan's acute malnutrition burden is concentrated within five states:
-
-- Jonglei  
-- Upper Nile  
-- Unity  
-- Warrap  
-- Northern Bahr el Ghazal  
-""")
-
-# -----------------------------
-# IPC PHASE 5 AREAS
-# -----------------------------
-st.header("IPC Phase 5 (Extremely Critical) Areas")
-
-phase5_df = pd.DataFrame({
-    "State/Area": [
-        "Jonglei","Jonglei","Jonglei","Jonglei",
-        "Upper Nile","Upper Nile","Upper Nile","Upper Nile",
-        "Unity","Unity",
-        "Abyei Administrative Area"
-    ],
-    "County": [
-        "Akobo","Fangak","Uror","Duk",
-        "Baliet","Akoka","Luakpiny/Nasir","Ulang",
-        "Abiemnhom","Rubkona",
-        "Entire Abyei Region"
-    ]
+ipc_df = pd.DataFrame({
+    "Region": ["Jonglei", "Jonglei", "Jonglei", "Upper Nile", "Upper Nile",
+               "Unity", "Unity", "Abyei Administrative Area"],
+    "County": ["Akobo", "Uror", "Fangak", "Ulang", "Nasir",
+               "Rubkona", "Abiemnhom", "Abyei Area"]
 })
 
-st.dataframe(phase5_df, use_container_width=True)
+st.dataframe(ipc_df, use_container_width=True)
 
-# -----------------------------
-# REGIONAL ANALYSIS
-# -----------------------------
-st.header("Regional Malnutrition Analysis")
+# --------------------------------------------------
+# REGIONAL STATE ANALYSIS EXPANDERS
+# --------------------------------------------------
+st.header("📊 State-by-State Nutrition Analysis")
 
-with st.expander("Jonglei State"):
-    st.write("""
-    Jonglei is currently the most critically affected state in South Sudan.
-    Conflict-driven displacement has caused GAM rates to exceed emergency thresholds.
-    Fangak County recorded approximately 21.5% Global Acute Malnutrition.
-    """)
+for state in states_list + admin_areas:
+    with st.expander(f"{state} Analysis"):
+        st.write(f"""
+        **{state}** continues to experience varying levels of acute malnutrition.
+        Replace this section with detailed narrative analysis based on verified IPC or cluster reports.
+        """)
 
-with st.expander("Upper Nile State"):
-    st.write("""
-    Upper Nile continues to face severe pressure from refugee inflows and conflict spillover from Sudan.
-    Four counties remain under IPC Phase 5 classification.
-    """)
-
-with st.expander("Unity State"):
-    st.write("""
-    Unity State continues to experience extreme wasting levels.
-    Flooding and agricultural destruction have weakened local food systems.
-    """)
-
-with st.expander("Warrap & Northern Bahr el Ghazal"):
-    st.write("""
-    These states remain in IPC Phase 4 due to chronic food deficits, rising food prices, and weak health systems.
-    """)
-
-with st.expander("Greater Equatoria Region"):
-    st.write("""
-    Central, Eastern, and Western Equatoria show relatively lower acute wasting levels due to improved rainfall and market functionality.
-    """)
-
-# -----------------------------
+# --------------------------------------------------
 # DRIVERS OF THE CRISIS
-# -----------------------------
-st.header("Key Drivers of the Crisis")
+# --------------------------------------------------
+st.header("⚠ Key Drivers of the Malnutrition Crisis")
 
 drivers_df = pd.DataFrame({
     "Driver": [
-        "Conflict","Displacement","Flooding",
-        "Disease Outbreaks","Economic Collapse",
-        "Humanitarian Access Constraints"
+        "Conflict", "Displacement", "Flooding", "Economic Crisis",
+        "Disease Outbreaks", "Access Restrictions"
     ],
-    "Impact": [35, 25, 15, 10, 10, 5]
+    "Impact Weight (%)": [30, 25, 15, 10, 12, 8]
 })
 
-fig_pie = px.pie(
+fig_drivers = px.pie(
     drivers_df,
     names="Driver",
-    values="Impact",
-    title="Main Drivers of Acute Malnutrition"
+    values="Impact Weight (%)",
+    title="Drivers Contributing to Acute Malnutrition"
 )
 
-st.plotly_chart(fig_pie, use_container_width=True)
+st.plotly_chart(fig_drivers, use_container_width=True)
 
-# -----------------------------
+# --------------------------------------------------
 # NUTRITION BURDEN
-# -----------------------------
-st.header("Nutrition Burden Visualization")
+# --------------------------------------------------
+st.header("🧒👩 Nutrition Burden in Vulnerable Populations")
 
 nutrition_df = pd.DataFrame({
-    "Category": [
-        "Children Under Five",
-        "Pregnant & Breastfeeding Women"
-    ],
-    "Affected Population": [2.2, 1.2]
+    "Group": ["Children Under 5", "Pregnant & Breastfeeding Women"],
+    "Population (Millions)": [2.2, 1.2]
 })
 
-fig_nutrition = px.bar(
+fig_burden = px.bar(
     nutrition_df,
-    x="Category",
-    y="Affected Population",
-    text="Affected Population",
-    title="Population Requiring Acute Malnutrition Treatment (Millions)",
-    color="Category"
+    x="Group",
+    y="Population (Millions)",
+    color="Group",
+    text="Population (Millions)",
+    title="Population Requiring Nutrition Treatment"
 )
 
-st.plotly_chart(fig_nutrition, use_container_width=True)
+st.plotly_chart(fig_burden, use_container_width=True)
 
-# -----------------------------
+# --------------------------------------------------
+# INTERACTIVE COUNTY ANALYSIS
+# --------------------------------------------------
+st.header("🔍 Interactive County Analysis")
+
+# -----------------------
+# Placeholder counties per region
+# -----------------------
+county_data = pd.DataFrame({
+    "State/Area": ["Jonglei", "Jonglei", "Upper Nile", "Unity", "Unity", "Warrap"],
+    "County": ["Akobo", "Fangak", "Ulang", "Rubkona", "Leer", "Tonj North"],
+    "GAM (%)": [21.5, 19.8, 17.2, 18.8, 16.3, 14.2],  # placeholder
+    "SAM (%)": [5.1, 4.8, 4.2, 4.6, 4.0, 3.2],
+    "Food Insecurity (IPC 3+ %)": [78, 82, 70, 75, 72, 65]
+})
+
+selected_state = st.selectbox("Select State or Admin Area", sorted(set(county_data["State/Area"])))
+filtered = county_data[county_data["State/Area"] == selected_state]
+
+st.subheader(f"County Statistics for {selected_state}")
+st.dataframe(filtered, use_container_width=True)
+
+st.subheader("County Malnutrition Visualization")
+
+fig_county = px.bar(
+    filtered,
+    x="County",
+    y="GAM (%)",
+    text="GAM (%)",
+    title=f"Global Acute Malnutrition Rates in {selected_state}",
+    color="County"
+)
+st.plotly_chart(fig_county, use_container_width=True)
+
+# Histogram
+fig_hist = px.histogram(
+    filtered,
+    x="GAM (%)",
+    title=f"GAM Distribution Histogram for {selected_state}"
+)
+st.plotly_chart(fig_hist, use_container_width=True)
+
+# Scatter (GAM vs Food Insecurity)
+fig_scatter = px.scatter(
+    filtered,
+    x="Food Insecurity (IPC 3+ %) ",
+    y="GAM (%)",
+    size="GAM (%)",
+    title=f"GAM vs Food Insecurity in {selected_state}"
+)
+st.plotly_chart(fig_scatter, use_container_width=True)
+
+# --------------------------------------------------
 # HUMANITARIAN RESPONSE
-# -----------------------------
-st.header("Humanitarian Response Efforts")
+# --------------------------------------------------
+st.header("🚑 Humanitarian Response Activities")
 
 st.success("""
-The Ministry of Health, UNICEF South Sudan, WHO, and humanitarian partners are scaling up emergency nutrition interventions across the country.
-""")
-
-st.markdown("""
-### Key Interventions
-- Expansion of stabilization centers  
-- Distribution of therapeutic feeding supplies  
-- Community nutrition screening  
-- Frontline health worker training  
-- Emergency cholera response support  
+Humanitarian partners and the Ministry of Health are scaling up:
+- Stabilization centers  
+- Therapeutic feeding programs  
+- Community MUAC screening  
 - Mobile nutrition clinics  
-- Child wasting treatment programs  
+- Cholera outbreak response  
+- WASH-nutrition integrated response  
 """)
 
-# -----------------------------
-# INTERACTIVE COUNTY ANALYSIS
-# -----------------------------
-st.header("Interactive County Analysis")
-
-counties = [
-    "Akobo","Fangak","Uror","Duk",
-    "Baliet","Akoka","Luakpiny/Nasir","Ulang",
-    "Rubkona","Abiemnhom"
-]
-
-selected_county = st.selectbox("Select County", counties)
-
-st.info(f"Displaying nutrition risk profile for {selected_county}.")
-
-# -----------------------------
-# SIDEBAR NAVIGATION
-# -----------------------------
-st.sidebar.title("Dashboard Navigation")
-
-st.sidebar.info("South Sudan Nutrition Crisis Monitoring System")
-
-st.sidebar.markdown("""
-### Sections
-- National Overview  
-- IPC Phase 5 Areas  
-- State Analysis  
-- Humanitarian Drivers  
-- Nutrition Visualizations  
-- Response Efforts  
-""")
-
-# -----------------------------
+# --------------------------------------------------
 # FOOTER
-# -----------------------------
+# --------------------------------------------------
 st.markdown("---")
-st.caption("Data Sources: IPC, UNICEF South Sudan, WHO Africa, WFP, ReliefWeb, CLiMIS South Sudan")
+st.caption("Data Sources (Insert Verified Values Manually): IPC AMN 2026, UNICEF South Sudan, WHO Africa, WFP FSMS, CLiMIS South Sudan.")
