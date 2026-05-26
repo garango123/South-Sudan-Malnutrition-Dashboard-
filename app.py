@@ -66,7 +66,7 @@ across South Sudan's 10 states and 3 Administrative Areas.
 # ==========================================================
 # NATIONAL METRICS
 # ==========================================================
-st.header("🌍 National Nutrition Overview")
+st.header(" National Nutrition Overview")
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -127,7 +127,7 @@ regions_df = pd.DataFrame({
 # ==========================================================
 # BAR CHART
 # ==========================================================
-st.header("📊 Regional Malnutrition Severity")
+st.header(" Regional Malnutrition Severity")
 
 fig_bar = px.bar(
     regions_df,
@@ -149,7 +149,7 @@ st.plotly_chart(fig_bar, use_container_width=True)
 # ==========================================================
 # PIE CHART
 # ==========================================================
-st.header("⚠️ Drivers of Acute Malnutrition")
+st.header(" Drivers of Acute Malnutrition")
 
 drivers_df = pd.DataFrame({
     "Driver": [
@@ -203,7 +203,7 @@ county_df = pd.DataFrame({
 # ==========================================================
 # DATA TABLE
 # ==========================================================
-st.header("📋 County Nutrition Statistics")
+st.header(" County Nutrition Statistics")
 
 st.dataframe(
     county_df,
@@ -241,7 +241,7 @@ st.plotly_chart(fig_gam, use_container_width=True)
 # ==========================================================
 # HISTOGRAM
 # ==========================================================
-st.subheader("📈 GAM Distribution Histogram")
+st.subheader(" GAM Distribution Histogram")
 
 fig_hist = px.histogram(
     county_df,
@@ -273,7 +273,7 @@ st.plotly_chart(fig_scatter, use_container_width=True)
 # ==========================================================
 # LINE CHART
 # ==========================================================
-st.header("📉 Monthly Nutrition Trend")
+st.header(" Monthly Nutrition Trend")
 
 trend_df = pd.DataFrame({
     "Month": [
