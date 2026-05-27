@@ -394,9 +394,9 @@ for state in states:
         - Food insecurity
         - Conflict and displacement
         - Disease outbreaks
-        - Flooding
+        - Natural disasters, eg flood, drought etc.
         - Limited health service access
-
+        - Cost of living 
         
         """)
 
